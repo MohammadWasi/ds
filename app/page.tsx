@@ -1,15 +1,17 @@
 "use client"
 
 import { useState, useMemo } from "react"
+import { ArrowLeft } from "lucide-react"
 import { Sidebar } from "@/components/dashboard/sidebar"
 import { Navbar } from "@/components/dashboard/navbar"
 import { FileGrid } from "@/components/dashboard/file-grid"
 import { FileList } from "@/components/dashboard/file-list"
-import { mockFiles } from "@/lib/data"
-import type { FileItem, ViewMode, FileFilters } from "@/types"
 import { BreadcrumbNav } from "@/components/dashboard/breadcrumb-nav"
 import { UploadZone } from "@/components/dashboard/upload-zone"
 import { FilePreviewModal } from "@/components/dashboard/file-preview-modal"
+import { Button } from "@/components/ui/button"
+import { getFilesInFolder, getFolderById, buildBreadcrumbPath } from "@/lib/data"
+import type { FileItem, ViewMode, FileFilters } from "@/types"
 
 export default function DashboardPage() {
   const [viewMode, setViewMode] = useState<ViewMode>("grid")
@@ -23,10 +25,22 @@ export default function DashboardPage() {
 
   const [selectedFile, setSelectedFile] = useState<FileItem | null>(null)
   const [isPreviewOpen, setIsPreviewOpen] = useState(false)
-  const [currentPath, setCurrentPath] = useState<string[]>([])
 
+  // Simple navigation state like Google Drive
+  const [currentFolderId, setCurrentFolderId] = useState<string | null>(null)
+
+  // Get current folder info
+  const currentFolder = currentFolderId ? getFolderById(currentFolderId) : null
+  const breadcrumbPath = buildBreadcrumbPath(currentFolderId)
+
+  // Get files in current folder (like Google Drive)
+  const currentFiles = useMemo(() => {
+    return getFilesInFolder(currentFolderId)
+  }, [currentFolderId])
+
+  // Apply filters to current files
   const filteredFiles = useMemo(() => {
-    let filtered = mockFiles
+    let filtered = currentFiles
 
     // Apply search filter
     if (searchQuery) {
@@ -45,27 +59,49 @@ export default function DashboardPage() {
         case "size":
           return ((a.size || 0) - (b.size || 0)) * order
         case "type":
-          return a.type.localeCompare(b.type) * order
+          // Folders first, then files (like Google Drive)
+          if (a.type !== b.type) {
+            return a.type === "folder" ? -1 : 1
+          }
+          return a.name.localeCompare(b.name) * order
         default:
           return 0
       }
     })
 
     return filtered
-  }, [searchQuery, filters])
+  }, [currentFiles, searchQuery, filters])
 
   const handleFileClick = (file: FileItem) => {
     if (file.type === "folder") {
-      setCurrentPath([...currentPath, file.name])
+      // Navigate into folder (like Google Drive)
+      setCurrentFolderId(file.id)
     } else {
+      // Open file preview
       setSelectedFile(file)
       setIsPreviewOpen(true)
     }
   }
 
+  const handleNavigateToFolder = (folderId: string | null) => {
+    setCurrentFolderId(folderId)
+  }
+
+  const handleGoBack = () => {
+    if (currentFolder?.parentId !== undefined) {
+      setCurrentFolderId(currentFolder.parentId)
+    } else {
+      setCurrentFolderId(null)
+    }
+  }
+
   const handleUpload = (files: File[]) => {
-    console.log("Uploading files:", files)
+    console.log("Uploading files to folder:", currentFolderId, files)
     // Handle file upload logic here
+  }
+
+  const getCurrentFolderName = () => {
+    return currentFolder?.name || "My Drive"
   }
 
   return (
@@ -82,21 +118,43 @@ export default function DashboardPage() {
 
         <main className="flex-1 overflow-auto p-6">
           <div className="space-y-6">
-            {currentPath.length > 0 && <BreadcrumbNav path={currentPath} />}
+            {/* Navigation - exactly like Google Drive */}
+            <div className="flex items-center gap-4">
+              {currentFolderId && (
+                <Button variant="ghost" size="sm" onClick={handleGoBack}>
+                  <ArrowLeft className="h-4 w-4 mr-2" />
+                  Back
+                </Button>
+              )}
 
-            <div className="flex items-center justify-between">
-              <h1 className="text-2xl font-bold">My Drive</h1>
-              <div className="text-sm text-muted-foreground">{filteredFiles.length} items</div>
+              <BreadcrumbNav path={breadcrumbPath} onNavigate={handleNavigateToFolder} />
             </div>
 
+            {/* Header */}
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-2xl font-bold">{getCurrentFolderName()}</h1>
+                <div className="text-sm text-muted-foreground mt-1">
+                  {filteredFiles.length} {filteredFiles.length === 1 ? "item" : "items"}
+                </div>
+              </div>
+
+              <Button variant="outline" size="sm">
+                New Folder
+              </Button>
+            </div>
+
+            {/* Upload Zone */}
             <UploadZone onUpload={handleUpload} />
 
+            {/* File Display */}
             {viewMode === "grid" ? (
               <FileGrid files={filteredFiles} onFileClick={handleFileClick} />
             ) : (
               <FileList files={filteredFiles} onFileClick={handleFileClick} />
             )}
 
+            {/* File Preview Modal */}
             <FilePreviewModal file={selectedFile} isOpen={isPreviewOpen} onClose={() => setIsPreviewOpen(false)} />
           </div>
         </main>

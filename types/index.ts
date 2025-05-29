@@ -10,7 +10,7 @@ export interface FileItem {
   shared: boolean
   starred: boolean
   thumbnail?: string
-  parentId?: string
+  parentId?: string // Simple parent reference like Google Drive
 }
 
 export interface User {
@@ -37,4 +37,10 @@ export interface FileFilters {
   sortBy: SortBy
   sortOrder: SortOrder
   viewMode: ViewMode
+}
+
+// Simple navigation state like Google Drive
+export interface DriveNavigation {
+  currentFolderId: string | null
+  folderHistory: { id: string | null; name: string }[] // For breadcrumbs
 }

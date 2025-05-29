@@ -61,6 +61,8 @@ function FileCard({ file, onClick }: { file: FileItem; onClick: () => void }) {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={onClick}>{file.type === "folder" ? "Open" : "Preview"}</DropdownMenuItem>
+                  <DropdownMenuSeparator />
                   <DropdownMenuItem>
                     <Share className="h-4 w-4 mr-2" />
                     Share
