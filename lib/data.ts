@@ -361,6 +361,11 @@ export const mockFiles: FileItem[] = [
 
 // Helper functions like Google Drive
 export function getFilesInFolder(folderId: string | null): FileItem[] {
+  if (folderId === null) {
+    // For root level, get files where parentId is undefined or null
+    return mockFiles.filter((file) => !file.parentId)
+  }
+  // For specific folders, get files where parentId matches
   return mockFiles.filter((file) => file.parentId === folderId)
 }
 
