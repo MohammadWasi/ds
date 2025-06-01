@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
+/* @layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
@@ -47,7 +47,7 @@
     --input: 217.2 32.6% 17.5%;
     --ring: 224.3 76.3% 94.1%;
   }
-}
+} */
 
 /* @layer base {
   * {
@@ -57,3 +57,173 @@
     @apply bg-background text-foreground;
   }
 } */
+
+
+
+
+
+@layer base {
+  :root {
+    /* Base colors */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    /* Primary colors from palette */
+    --primary: 221 83% 53%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+
+    /* UI colors */
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.5rem;
+
+    /* Custom dashboard colors from palette */
+    --chart-primary: 221 83% 53%; /* Primary blue */
+    --chart-secondary: 142 76% 36%; /* Green */
+    --chart-accent: 271 81% 56%; /* Purple */
+    --chart-warning: 43 96% 56%; /* Yellow */
+    --chart-danger: 0 84% 60%; /* Red/Pink */
+    --chart-success: 142 76% 36%; /* Green */
+    --chart-info: 199 89% 48%; /* Teal */
+    --chart-neutral: 215 16% 47%; /* Slate */
+
+    /* Tints for light mode */
+    --chart-primary-light: 221 83% 85%;
+    --chart-secondary-light: 142 76% 85%;
+    --chart-accent-light: 271 81% 85%;
+    --chart-warning-light: 43 96% 85%;
+    --chart-danger-light: 0 84% 85%;
+    --chart-success-light: 142 76% 85%;
+    --chart-info-light: 199 89% 85%;
+    --chart-neutral-light: 215 16% 85%;
+
+    /* Background variations */
+    --bg-primary: 221 83% 98%;
+    --bg-secondary: 142 76% 98%;
+    --bg-accent: 271 81% 98%;
+    --bg-warning: 43 96% 98%;
+    --bg-danger: 0 84% 98%;
+  }
+
+  .dark {
+    /* Base colors for dark mode */
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 84% 4.9%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 94.1%;
+
+    /* Custom dashboard colors for dark mode */
+    --chart-primary: 217 91% 60%; /* Lighter blue */
+    --chart-secondary: 142 69% 58%; /* Lighter green */
+    --chart-accent: 271 75% 70%; /* Lighter purple */
+    --chart-warning: 43 89% 70%; /* Lighter yellow */
+    --chart-danger: 0 78% 70%; /* Lighter red */
+    --chart-success: 142 69% 58%; /* Lighter green */
+    --chart-info: 199 82% 65%; /* Lighter teal */
+    --chart-neutral: 215 20% 65%; /* Lighter slate */
+
+    /* Dark tints */
+    --chart-primary-light: 217 91% 25%;
+    --chart-secondary-light: 142 69% 25%;
+    --chart-accent-light: 271 75% 25%;
+    --chart-warning-light: 43 89% 25%;
+    --chart-danger-light: 0 78% 25%;
+    --chart-success-light: 142 69% 25%;
+    --chart-info-light: 199 82% 25%;
+    --chart-neutral-light: 215 20% 25%;
+
+    /* Dark background variations */
+    --bg-primary: 217 91% 8%;
+    --bg-secondary: 142 69% 8%;
+    --bg-accent: 271 75% 8%;
+    --bg-warning: 43 89% 8%;
+    --bg-danger: 0 78% 8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom chart color classes */
+.chart-primary {
+  color: hsl(var(--chart-primary));
+}
+.chart-secondary {
+  color: hsl(var(--chart-secondary));
+}
+.chart-accent {
+  color: hsl(var(--chart-accent));
+}
+.chart-warning {
+  color: hsl(var(--chart-warning));
+}
+.chart-danger {
+  color: hsl(var(--chart-danger));
+}
+.chart-success {
+  color: hsl(var(--chart-success));
+}
+.chart-info {
+  color: hsl(var(--chart-info));
+}
+.chart-neutral {
+  color: hsl(var(--chart-neutral));
+}
+
+.bg-chart-primary {
+  background-color: hsl(var(--bg-primary));
+}
+.bg-chart-secondary {
+  background-color: hsl(var(--bg-secondary));
+}
+.bg-chart-accent {
+  background-color: hsl(var(--bg-accent));
+}
+.bg-chart-warning {
+  background-color: hsl(var(--bg-warning));
+}
+.bg-chart-danger {
+  background-color: hsl(var(--bg-danger));
+}
+
+
+
+
+
+
+
+
