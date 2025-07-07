@@ -202,6 +202,35 @@ const navigationItems: NavigationItem[] = [
       },
     ],
   },
+  {
+    id: "ai-analysis",
+    label: "AI Analysis",
+    icon: "brain",
+    subItems: [
+      {
+        id: "ai-data-analysis",
+        label: "Data Analysis",
+        description: "AI-powered financial data analysis and insights",
+        icon: "brain",
+        href: "/ai-analysis",
+        isNew: true,
+      },
+      {
+        id: "forecasting",
+        label: "Forecasting",
+        description: "Advanced time-series forecasting and predictions",
+        icon: "trending-up",
+        href: "/ai-analysis?tab=forecast",
+      },
+      {
+        id: "risk-analysis",
+        label: "Risk Analysis",
+        description: "Liquidity stress testing and risk assessment",
+        icon: "alert-triangle",
+        href: "/ai-analysis?tab=risk",
+      },
+    ],
+  },
 ]
 
 const mockUser = {
