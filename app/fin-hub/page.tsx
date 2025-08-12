@@ -11,7 +11,6 @@ import { Progress } from "@/components/ui/progress"
 import {
   TrendingUp,
   DollarSign,
-  CreditCard,
   PieChart,
   BarChart3,
   ArrowUpRight,
@@ -23,94 +22,207 @@ import {
   Download,
   Eye,
   EyeOff,
+  Activity,
+  Target,
+  Zap,
+  Shield,
+  Calculator,
+  TrendingDown,
+  AlertTriangle,
+  Clock,
+  ExternalLink,
 } from "lucide-react"
 
 export default function FinancialDashboard() {
   const [timeRange, setTimeRange] = useState("30d")
   const [showBalance, setShowBalance] = useState(true)
 
-  const metrics = [
+  const overviewMetrics = [
     {
-      title: "Total Balance",
-      value: showBalance ? "$124,532.00" : "••••••••",
-      change: "+12.5%",
+      title: "Total Portfolio Value",
+      value: showBalance ? "$2,847,532.00" : "••••••••",
+      change: "+8.2%",
       trend: "up",
       icon: DollarSign,
       color: "text-emerald-600",
     },
     {
-      title: "Monthly Spending",
-      value: showBalance ? "$8,234.50" : "••••••••",
-      change: "-3.2%",
-      trend: "down",
-      icon: CreditCard,
+      title: "Risk-Adjusted Return",
+      value: showBalance ? "12.4%" : "••••",
+      change: "+2.1%",
+      trend: "up",
+      icon: Shield,
       color: "text-blue-600",
     },
     {
-      title: "Investments",
-      value: showBalance ? "$45,678.90" : "••••••••",
-      change: "+8.7%",
-      trend: "up",
-      icon: TrendingUp,
+      title: "Liquidity Ratio",
+      value: "1.85",
+      change: "-0.05",
+      trend: "down",
+      icon: Activity,
       color: "text-purple-600",
     },
     {
-      title: "Savings Goal",
-      value: "68%",
-      change: "+5.1%",
+      title: "Active Positions",
+      value: "247",
+      change: "+12",
       trend: "up",
-      icon: PieChart,
+      icon: Target,
       color: "text-orange-600",
     },
   ]
 
-  const transactions = [
-    { id: 1, description: "Salary Deposit", amount: "+$5,200.00", date: "Today", category: "Income", type: "credit" },
-    { id: 2, description: "Grocery Store", amount: "-$127.45", date: "Yesterday", category: "Food", type: "debit" },
+  const miniDashboards = [
     {
-      id: 3,
-      description: "Netflix Subscription",
-      amount: "-$15.99",
-      date: "2 days ago",
-      category: "Entertainment",
-      type: "debit",
+      id: "lst-forecasting",
+      title: "LST Forecasting",
+      description: "Liquidity Stress Testing Forecasting Models",
+      icon: TrendingUp,
+      color: "from-blue-500 to-blue-600",
+      metrics: [
+        { label: "Stress Scenario Coverage", value: "98.5%", status: "good" },
+        { label: "Forecast Accuracy", value: "94.2%", status: "good" },
+        { label: "Model Confidence", value: "87.3%", status: "warning" },
+      ],
+      lastUpdated: "2 hours ago",
+      status: "active",
     },
     {
-      id: 4,
-      description: "Investment Return",
-      amount: "+$342.18",
-      date: "3 days ago",
+      id: "lst-bau",
+      title: "LST BAU",
+      description: "Liquidity Stress Testing Business As Usual",
+      icon: Shield,
+      color: "from-emerald-500 to-emerald-600",
+      metrics: [
+        { label: "BAU Liquidity Buffer", value: "$1.2B", status: "good" },
+        { label: "Coverage Ratio", value: "145%", status: "good" },
+        { label: "Stress Test Pass Rate", value: "96.8%", status: "good" },
+      ],
+      lastUpdated: "1 hour ago",
+      status: "active",
+    },
+    {
+      id: "irr",
+      title: "IRR Analysis",
+      description: "Internal Rate of Return Calculations",
+      icon: Calculator,
+      color: "from-purple-500 to-purple-600",
+      metrics: [
+        { label: "Portfolio IRR", value: "14.7%", status: "good" },
+        { label: "Benchmark Comparison", value: "+3.2%", status: "good" },
+        { label: "Risk-Adjusted IRR", value: "11.9%", status: "good" },
+      ],
+      lastUpdated: "30 minutes ago",
+      status: "active",
+    },
+    {
+      id: "rft",
+      title: "RFT Dashboard",
+      description: "Rate Forecasting Tool",
+      icon: TrendingDown,
+      color: "from-orange-500 to-orange-600",
+      metrics: [
+        { label: "Fed Rate Forecast", value: "4.75%", status: "warning" },
+        { label: "Yield Curve Slope", value: "0.85%", status: "good" },
+        { label: "Volatility Index", value: "18.3", status: "warning" },
+      ],
+      lastUpdated: "15 minutes ago",
+      status: "active",
+    },
+    {
+      id: "ccf",
+      title: "CCF Monitor",
+      description: "Credit Conversion Factor Analysis",
+      icon: AlertTriangle,
+      color: "from-red-500 to-red-600",
+      metrics: [
+        { label: "Average CCF", value: "23.4%", status: "good" },
+        { label: "High-Risk Exposures", value: "12", status: "warning" },
+        { label: "Regulatory Compliance", value: "99.1%", status: "good" },
+      ],
+      lastUpdated: "45 minutes ago",
+      status: "active",
+    },
+    {
+      id: "ftp",
+      title: "FTP Engine",
+      description: "Funds Transfer Pricing",
+      icon: Zap,
+      color: "from-indigo-500 to-indigo-600",
+      metrics: [
+        { label: "Net Interest Margin", value: "3.42%", status: "good" },
+        { label: "Transfer Rate", value: "2.85%", status: "good" },
+        { label: "Spread Analysis", value: "+0.57%", status: "good" },
+      ],
+      lastUpdated: "1 hour ago",
+      status: "active",
+    },
+  ]
+
+  const transactions = [
+    {
+      id: 1,
+      description: "Portfolio Rebalancing",
+      amount: "+$125,000.00",
+      date: "Today",
       category: "Investment",
       type: "credit",
     },
     {
-      id: 5,
-      description: "Electric Bill",
-      amount: "-$89.32",
-      date: "4 days ago",
-      category: "Utilities",
+      id: 2,
+      description: "Risk Management Fee",
+      amount: "-$2,450.00",
+      date: "Yesterday",
+      category: "Fee",
       type: "debit",
+    },
+    {
+      id: 3,
+      description: "Dividend Distribution",
+      amount: "+$8,750.00",
+      date: "2 days ago",
+      category: "Income",
+      type: "credit",
+    },
+    {
+      id: 4,
+      description: "Compliance Audit",
+      amount: "-$5,200.00",
+      date: "3 days ago",
+      category: "Operational",
+      type: "debit",
+    },
+    {
+      id: 5,
+      description: "Interest Payment",
+      amount: "+$15,680.00",
+      date: "4 days ago",
+      category: "Income",
+      type: "credit",
     },
   ]
 
   const insights = [
     {
-      title: "Spending Alert",
-      description: "You've spent 15% more on dining this month compared to last month.",
+      title: "Liquidity Alert",
+      description: "LST forecasting indicates potential stress in Q2. Consider increasing buffer by 15%.",
       type: "warning",
-      action: "View Details",
+      action: "Review LST Models",
+      dashboard: "lst-forecasting",
     },
     {
-      title: "Savings Opportunity",
-      description: "You could save $200/month by switching to a high-yield savings account.",
+      title: "IRR Opportunity",
+      description: "Current portfolio IRR exceeds benchmark by 3.2%. Consider scaling successful strategies.",
       type: "success",
-      action: "Learn More",
+      action: "Analyze Performance",
+      dashboard: "irr",
     },
     {
-      title: "Investment Tip",
-      description: "Consider diversifying your portfolio with international stocks.",
+      title: "Rate Environment",
+      description: "RFT models suggest rate volatility ahead. Review hedging strategies.",
       type: "info",
-      action: "Explore Options",
+      action: "Update Forecasts",
+      dashboard: "rft",
     },
   ]
 
@@ -125,7 +237,7 @@ export default function FinancialDashboard() {
                 <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
                   <BarChart3 className="w-5 h-5 text-white" />
                 </div>
-                <h1 className="text-xl font-bold text-slate-900">FinanceHub</h1>
+                <h1 className="text-xl font-bold text-slate-900">Financial Analytics Hub</h1>
               </div>
             </div>
 
@@ -141,7 +253,7 @@ export default function FinancialDashboard() {
               </Button>
               <Avatar className="w-8 h-8">
                 <AvatarImage src="/placeholder.svg?height=32&width=32" />
-                <AvatarFallback>JD</AvatarFallback>
+                <AvatarFallback>FA</AvatarFallback>
               </Avatar>
             </div>
           </div>
@@ -152,7 +264,7 @@ export default function FinancialDashboard() {
         {/* Welcome Section */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-2">
-            <h2 className="text-2xl font-bold text-slate-900">Welcome back, John</h2>
+            <h2 className="text-2xl font-bold text-slate-900">Financial Analytics Dashboard</h2>
             <div className="flex items-center gap-2">
               <Select value={timeRange} onValueChange={setTimeRange}>
                 <SelectTrigger className="w-32">
@@ -170,22 +282,12 @@ export default function FinancialDashboard() {
               </Button>
             </div>
           </div>
-          <p className="text-slate-600">
-            Here's your financial overview for{" "}
-            {timeRange === "7d"
-              ? "the last 7 days"
-              : timeRange === "30d"
-                ? "the last 30 days"
-                : timeRange === "90d"
-                  ? "the last 90 days"
-                  : "the last year"}
-            .
-          </p>
+          <p className="text-slate-600">Comprehensive view of your financial analytics and risk management tools.</p>
         </div>
 
         {/* Key Metrics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {metrics.map((metric, index) => (
+          {overviewMetrics.map((metric, index) => (
             <Card key={index} className="hover:shadow-lg transition-shadow duration-200">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium text-slate-600">{metric.title}</CardTitle>
@@ -211,6 +313,76 @@ export default function FinancialDashboard() {
           ))}
         </div>
 
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-xl font-bold text-slate-900">Analytics Dashboards</h3>
+            <Button variant="outline" size="sm">
+              <Settings className="w-4 h-4 mr-2" />
+              Customize View
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {miniDashboards.map((dashboard) => (
+              <Card key={dashboard.id} className="hover:shadow-xl transition-all duration-300 cursor-pointer group">
+                <CardHeader className="pb-3">
+                  <div className="flex items-center justify-between">
+                    <div
+                      className={`w-12 h-12 rounded-lg bg-gradient-to-r ${dashboard.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-200`}
+                    >
+                      <dashboard.icon className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Badge variant={dashboard.status === "active" ? "default" : "secondary"} className="text-xs">
+                        {dashboard.status}
+                      </Badge>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </div>
+                  <div>
+                    <CardTitle className="text-lg mb-1">{dashboard.title}</CardTitle>
+                    <CardDescription className="text-sm">{dashboard.description}</CardDescription>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  {dashboard.metrics.map((metric, index) => (
+                    <div key={index} className="flex items-center justify-between">
+                      <span className="text-sm text-slate-600">{metric.label}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-semibold text-slate-900">{metric.value}</span>
+                        <div
+                          className={`w-2 h-2 rounded-full ${
+                            metric.status === "good"
+                              ? "bg-emerald-500"
+                              : metric.status === "warning"
+                                ? "bg-orange-500"
+                                : "bg-red-500"
+                          }`}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                  <div className="flex items-center justify-between pt-2 border-t">
+                    <div className="flex items-center gap-1 text-xs text-slate-500">
+                      <Clock className="w-3 h-3" />
+                      Updated {dashboard.lastUpdated}
+                    </div>
+                    <Button variant="outline" size="sm" className="text-xs bg-transparent">
+                      View Details
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+
         {/* Dashboard Tabs */}
         <Tabs defaultValue="overview" className="space-y-6">
           <TabsList className="grid w-full grid-cols-4 lg:w-96">
@@ -222,23 +394,26 @@ export default function FinancialDashboard() {
 
           <TabsContent value="overview" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* Spending Breakdown */}
               <Card className="lg:col-span-2">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <PieChart className="w-5 h-5 text-blue-600" />
-                    Spending Breakdown
+                    Performance Breakdown
                   </CardTitle>
-                  <CardDescription>Your expenses by category this month</CardDescription>
+                  <CardDescription>Portfolio performance by asset class</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     {[
-                      { category: "Food & Dining", amount: "$1,234", percentage: 35, color: "bg-blue-600" },
-                      { category: "Transportation", amount: "$856", percentage: 24, color: "bg-purple-600" },
-                      { category: "Shopping", amount: "$642", percentage: 18, color: "bg-emerald-600" },
-                      { category: "Utilities", amount: "$428", percentage: 12, color: "bg-orange-600" },
-                      { category: "Entertainment", amount: "$386", percentage: 11, color: "bg-red-600" },
+                      { category: "Fixed Income", amount: "$1,234,567", percentage: 43, color: "bg-blue-600" },
+                      { category: "Equities", amount: "$856,432", percentage: 30, color: "bg-purple-600" },
+                      {
+                        category: "Alternative Investments",
+                        amount: "$642,890",
+                        percentage: 23,
+                        color: "bg-emerald-600",
+                      },
+                      { category: "Cash & Equivalents", amount: "$113,643", percentage: 4, color: "bg-orange-600" },
                     ].map((item, index) => (
                       <div key={index} className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
@@ -247,7 +422,7 @@ export default function FinancialDashboard() {
                         </div>
                         <div className="flex items-center gap-3">
                           <Progress value={item.percentage} className="w-20" />
-                          <span className="text-sm font-semibold text-slate-900 w-16 text-right">{item.amount}</span>
+                          <span className="text-sm font-semibold text-slate-900 w-20 text-right">{item.amount}</span>
                         </div>
                       </div>
                     ))}
@@ -255,28 +430,27 @@ export default function FinancialDashboard() {
                 </CardContent>
               </Card>
 
-              {/* Quick Actions */}
               <Card>
                 <CardHeader>
                   <CardTitle>Quick Actions</CardTitle>
-                  <CardDescription>Manage your finances</CardDescription>
+                  <CardDescription>Analytics tools</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <Button className="w-full justify-start bg-transparent" variant="outline">
-                    <CreditCard className="w-4 h-4 mr-2" />
-                    Transfer Money
+                    <Calculator className="w-4 h-4 mr-2" />
+                    Run Stress Test
                   </Button>
                   <Button className="w-full justify-start bg-transparent" variant="outline">
                     <Download className="w-4 h-4 mr-2" />
-                    Export Data
+                    Export Analytics
                   </Button>
                   <Button className="w-full justify-start bg-transparent" variant="outline">
-                    <PieChart className="w-4 h-4 mr-2" />
-                    Set Budget
+                    <Shield className="w-4 h-4 mr-2" />
+                    Risk Assessment
                   </Button>
                   <Button className="w-full justify-start bg-transparent" variant="outline">
                     <TrendingUp className="w-4 h-4 mr-2" />
-                    Investment Goals
+                    Forecast Models
                   </Button>
                 </CardContent>
               </Card>
@@ -289,7 +463,7 @@ export default function FinancialDashboard() {
                 <div className="flex items-center justify-between">
                   <div>
                     <CardTitle>Recent Transactions</CardTitle>
-                    <CardDescription>Your latest financial activity</CardDescription>
+                    <CardDescription>Latest financial activity</CardDescription>
                   </div>
                   <Button variant="outline" size="sm">
                     <Filter className="w-4 h-4 mr-2" />
@@ -360,9 +534,16 @@ export default function FinancialDashboard() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-slate-600 mb-4">{insight.description}</p>
-                    <Button variant="outline" size="sm" className="w-full bg-transparent">
-                      {insight.action}
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button variant="outline" size="sm" className="flex-1 bg-transparent">
+                        {insight.action}
+                      </Button>
+                      {insight.dashboard && (
+                        <Button variant="ghost" size="sm">
+                          <ExternalLink className="w-4 h-4" />
+                        </Button>
+                      )}
+                    </div>
                   </CardContent>
                 </Card>
               ))}
@@ -373,22 +554,22 @@ export default function FinancialDashboard() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>Monthly Report</CardTitle>
-                  <CardDescription>Comprehensive financial summary</CardDescription>
+                  <CardTitle>Risk Analytics Report</CardTitle>
+                  <CardDescription>Comprehensive risk assessment</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-600">Total Income</span>
-                      <span className="font-semibold text-emerald-600">+$8,420.00</span>
+                      <span className="text-slate-600">Value at Risk (VaR)</span>
+                      <span className="font-semibold text-red-600">$2.4M</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-600">Total Expenses</span>
-                      <span className="font-semibold text-red-600">-$6,234.50</span>
+                      <span className="text-slate-600">Expected Shortfall</span>
+                      <span className="font-semibold text-red-600">$3.8M</span>
                     </div>
                     <div className="flex justify-between items-center pt-2 border-t">
-                      <span className="font-medium text-slate-900">Net Income</span>
-                      <span className="font-bold text-emerald-600">+$2,185.50</span>
+                      <span className="font-medium text-slate-900">Risk Score</span>
+                      <span className="font-bold text-orange-600">Medium</span>
                     </div>
                   </div>
                   <Button className="w-full mt-4">
@@ -400,26 +581,26 @@ export default function FinancialDashboard() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Investment Performance</CardTitle>
-                  <CardDescription>Portfolio growth over time</CardDescription>
+                  <CardTitle>Performance Analytics</CardTitle>
+                  <CardDescription>Portfolio performance metrics</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-600">Portfolio Value</span>
-                      <span className="font-semibold">$45,678.90</span>
+                      <span className="text-slate-600">Sharpe Ratio</span>
+                      <span className="font-semibold">1.42</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-600">Total Return</span>
-                      <span className="font-semibold text-emerald-600">+$3,456.78</span>
+                      <span className="text-slate-600">Alpha</span>
+                      <span className="font-semibold text-emerald-600">+2.8%</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-600">Return Rate</span>
-                      <span className="font-semibold text-emerald-600">+8.2%</span>
+                      <span className="text-slate-600">Beta</span>
+                      <span className="font-semibold">0.95</span>
                     </div>
                   </div>
                   <Button variant="outline" className="w-full mt-4 bg-transparent">
-                    View Portfolio
+                    View Analytics
                   </Button>
                 </CardContent>
               </Card>
